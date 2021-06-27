@@ -69,10 +69,6 @@ model.add(Dense(200))
 model.add(Activation('sigmoid'))
 model.add(Dropout(0.5))
 
-###fourth layer
-model.add(Dense(100))
-model.add(Activation('sigmoid'))
-model.add(Dropout(0.5))
 
 ###final layer
 model.add(Dense(num_labels))
@@ -92,7 +88,7 @@ checkpointer = ModelCheckpoint(filepath='audio_classification.hdf5', verbose=1, 
 
 start = datetime.now()
 
-model.fit(Xtrain, ytrain, validation_data=(Xtest, ytest), batch_size=10, epochs=25000, callbacks=[checkpointer], verbose=1)
+model.fit(Xtrain, ytrain, validation_data=(Xtest, ytest), batch_size=32, epochs=5000, callbacks=[checkpointer], verbose=1)
 
 
 duration = datetime.now() - start

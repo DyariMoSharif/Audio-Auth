@@ -57,15 +57,15 @@ num_labels=50
 
 model=Sequential()
 ###first layer
-model.add(Dense(100,input_shape=(40,)))
+model.add(Dense(400,input_shape=(40,)))
 model.add(Activation('sigmoid'))
 model.add(Dropout(0.5))
 ###second layer
-model.add(Dense(200))
+model.add(Dense(400))
 model.add(Activation('sigmoid'))
 model.add(Dropout(0.5))
 ###third layer
-model.add(Dense(200))
+model.add(Dense(400))
 model.add(Activation('sigmoid'))
 model.add(Dropout(0.5))
 
@@ -88,7 +88,7 @@ checkpointer = ModelCheckpoint(filepath='audio_classification.hdf5', verbose=1, 
 
 start = datetime.now()
 
-model.fit(Xtrain, ytrain, validation_data=(Xtest, ytest), batch_size=32, epochs=5000, callbacks=[checkpointer], verbose=1)
+model.fit(Xtrain, ytrain, validation_data=(Xtest, ytest), batch_size=32, epochs=1000, callbacks=[checkpointer], verbose=1)
 
 
 duration = datetime.now() - start
@@ -101,7 +101,7 @@ print('The accuracy: ',test_accuracy[1])
 
 model.predict_classes(Xtest)
 
-filename="cats_dogs\\cat_22.wav"
+filename="audio\\1-43382-A-1.wav"
 audio, sample_rate = librosa.load(filename, res_type='kaiser_fast') 
 #librosa.get_duration(filename='cats_dogs\\cat_32.wav')
 mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
@@ -112,19 +112,3 @@ mfccs_scaled_features=mfccs_scaled_features.reshape(1,-1)
 predicted_label=model.predict_classes(mfccs_scaled_features)
 prediction_class = labelencoder.inverse_transform(predicted_label) 
 prediction_class[0]
-
-
-# epochsUsed=[]
-# accuracyUsed=[]
-# for i in range(1000):
-#     model.fit(Xtrain, ytrain, batch_size=num_batch_size, epochs=i, validation_data=(Xtest, ytest), callbacks=[checkpointer], verbose=1)
-#     test_accuracy=model.evaluate(Xtest,ytest,verbose=0)
-#     accuracyUsed.append(test_accuracy[1])
-
-# import matplotlib.pyplot as plt
-
-# plt.plot(range(401),accuracyUsed)
-
-
-# for row in Xtrain:
-#     print(librosa.get_duration(filename=('cats_dogs\\'+row)))

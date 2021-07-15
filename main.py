@@ -58,15 +58,15 @@ num_labels=50
 model=Sequential()
 ###first layer
 model.add(Dense(400,input_shape=(40,)))
-model.add(Activation('sigmoid'))
+model.add(Activation('relu'))
 model.add(Dropout(0.5))
 ###second layer
 model.add(Dense(400))
-model.add(Activation('sigmoid'))
+model.add(Activation('relu'))
 model.add(Dropout(0.5))
 ###third layer
 model.add(Dense(400))
-model.add(Activation('sigmoid'))
+model.add(Activation('relu'))
 model.add(Dropout(0.5))
 
 
@@ -88,7 +88,7 @@ checkpointer = ModelCheckpoint(filepath='audio_classification.hdf5', verbose=1, 
 
 start = datetime.now()
 
-model.fit(Xtrain, ytrain, validation_data=(Xtest, ytest), batch_size=32, epochs=1000, callbacks=[checkpointer], verbose=1)
+model.fit(Xtrain, ytrain, validation_data=(Xtest, ytest), batch_size=32, epochs=950, callbacks=[checkpointer], verbose=1)
 
 
 duration = datetime.now() - start
